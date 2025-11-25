@@ -29,3 +29,19 @@ class Section:
             if item.item_id == item_id:
                 return item
         raise ValueError(f"Товар с id {item_id} не найден в секции '{self.name}'")
+    def update_name(self, new_name):
+        self.name = new_name
+
+    def update_capacity(self, new_capacity):
+        if new_capacity < sum(i.quantity for i in self.items):
+            raise ValueError(f"Новая вместимость меньше текущего количества товаров в секции '{self.name}'")
+        self.capacity = new_capacity
+
+    def delete(self):
+        self.section_id = None
+        self.name = None
+        self.capacity = 0
+        self.items = []
+
+    def __repr__(self):
+        return f"Секция '{self.name}', товары: {self.items}"
