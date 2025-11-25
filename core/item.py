@@ -7,3 +7,24 @@ class Item:
         self.quantity = quantity
         self.unit = unit
         self.category = category
+    def get_info(self):
+        return {
+            "id": self.item_id,
+            "название": self.name,
+            "количество": self.quantity,
+            "единица": self.unit,
+            "категория": self.category
+        }
+    def update_name(self, new_name):
+        self.name = new_name
+
+    def update_quantity(self, new_quantity):
+        if new_quantity < 0:
+            raise ValueError(f"Количество для {self.name} не может быть отрицательным")
+        self.quantity = new_quantity
+
+    def update_unit(self, new_unit):
+        self.unit = new_unit
+
+    def update_category(self, new_category):
+        self.category = new_category
