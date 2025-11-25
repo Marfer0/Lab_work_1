@@ -13,3 +13,22 @@ class StockTransfer:
             "target": self.target_id,
             "успешно": self.success
         }
+    def execute_transfer(self):
+        try:
+            self.manager.move_item(self.item_id, self.source_id, self.target_id)
+            self.success = True
+        except Exception as e:
+            self.success = False
+            raise e
+
+    def rollback(self):
+        if self.success:
+            self.manager.move_item(self.item_id, self.target_id, self.source_id)
+            self.success = False
+
+    def delete(self):
+        self.manager = None
+        self.item_id = None
+        self.source_id = None
+        self.target_id = None
+        self.success = False
