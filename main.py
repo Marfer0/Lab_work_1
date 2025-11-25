@@ -69,3 +69,36 @@ def main():
     structure.add_warehouse(wh2)
     structure.add_category(cat1)
     structure.add_category(cat2)
+    ReportService.log("\n=== Генерация консольного отчёта ===")
+    ReportService.generate_full_report(
+        warehouses=[wh1, wh2, wh3],
+        sections=[section1, section2],
+        categories=[cat1, cat2, cat3],
+        suppliers=[supplier1, supplier2],
+        transfers=[transfer1, transfer2]
+    )
+
+    ReportService.log("=== Сохранение отчётов в JSON и XML ===")
+    FileManager.save_to_json(
+        "full_report.json",
+        warehouses=[wh1, wh2, wh3],
+        sections=[section1, section2],
+        categories=[cat1, cat2, cat3],
+        suppliers=[supplier1, supplier2],
+        transfers=[transfer1, transfer2]
+    )
+
+    FileManager.save_to_xml(
+        "full_report.xml",
+        warehouses=[wh1, wh2, wh3],
+        sections=[section1, section2],
+        categories=[cat1, cat2, cat3],
+        suppliers=[supplier1, supplier2],
+        transfers=[transfer1, transfer2]
+    )
+
+    ReportService.log("Полный отчёт успешно сохранён в full_report.json и full_report.xml")
+
+
+if __name__ == "__main__":
+    main()
