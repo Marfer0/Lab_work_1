@@ -93,3 +93,41 @@ class FileManager:
             tree.write(filename, encoding='utf-8', xml_declaration=True)
         except IOError as e:
             print("Ошибка при сохранении XML:", e)
+
+    @staticmethod
+    def load_from_json(filename):
+        try:
+            with open(filename, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except IOError as e:
+            print("Ошибка при загрузке JSON:", e)
+            return []
+
+    @staticmethod
+    def load_from_xml(filename):
+        try:
+            tree = ET.parse(filename)
+            root = tree.getroot()
+            result = []
+
+            for wh_elem in root.findall("./warehouses/warehouse"):
+                wh_info = {
+                    "id": int(wh_elem.attrib["id"]),
+                    "name": wh_elem.attrib["name"],
+                    "capacity": int(wh_elem.attrib["capacity"]),
+                    "items": []
+                }
+                for item_elem in wh_elem.findall("item"):
+                    wh_info["items"].append({
+                        "id": int(item_elem.attrib["id"]),
+                        "name": item_elem.attrib["name"],
+                        "quantity": int(item_elem.attrib["quantity"]),
+                        "unit": item_elem.attrib["unit"],
+                        "category": item_elem.attrib["category"],
+                        "expiration_date": item_elem.attrib.get("expiration_date", "")
+                    })
+                result.append(wh_info)
+            return result
+        except (IOError, ET.ParseError) as e:
+            print("Ошибка при загрузке XML:", e)
+            return []
