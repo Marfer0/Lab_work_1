@@ -50,3 +50,22 @@ def main():
 
     transfer1 = StockTransfer(inv_manager, 101, 1, 2)
     transfer2 = StockTransfer(inv_manager, 104, 3, 2)
+
+    ReportService.log("\n=== Перемещения товаров ===")
+    try:
+        transfer1.execute_transfer()
+        ReportService.log(f"Перемещён товар {item1.name} со склада {wh1.name} на {wh2.name}")
+    except Exception as e:
+        ReportService.log(f"Ошибка перемещения: {e}")
+
+    try:
+        transfer2.execute_transfer()
+        ReportService.log(f"Перемещён товар {item4.name} со склада {wh3.name} на {wh2.name}")
+    except Exception as e:
+        ReportService.log(f"Ошибка перемещения: {e}")
+
+    structure = Structure()
+    structure.add_warehouse(wh1)
+    structure.add_warehouse(wh2)
+    structure.add_category(cat1)
+    structure.add_category(cat2)
