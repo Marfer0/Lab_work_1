@@ -28,3 +28,12 @@ class Item:
 
     def update_category(self, new_category):
         self.category = new_category
+    def delete(self):
+        self.item_id = None
+        self.name = None
+        self.quantity = 0
+        self.unit = None
+        self.category = None
+
+    def __repr__(self):
+        return f"{self.name} — {self.quantity} {self.unit}, категория: {self.category}"
