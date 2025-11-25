@@ -32,3 +32,16 @@ class Warehouse:
             if item.item_id == item_id:
                 return item
         raise ItemNotFoundError(f"Товар с id {item_id} не найден на складе '{self.name}'")
+    def update_item_quantity(self, item_id, new_quantity):
+        item = self.get_item(item_id)
+        item.update_quantity(new_quantity)
+
+    # Удаление склада
+    def delete(self):
+        self.warehouse_id = None
+        self.name = None
+        self.capacity = 0
+        self.items = []
+
+    def __repr__(self):
+        return f"Склад '{self.name}', товары: {self.items}"
