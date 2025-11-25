@@ -37,3 +37,23 @@ class Item:
 
     def __repr__(self):
         return f"{self.name} — {self.quantity} {self.unit}, категория: {self.category}"
+
+class PerishableItem(Item):
+    def __init__(self, item_id, name, quantity, unit, category, expiration_date):
+        super().__init__(item_id, name, quantity, unit, category)
+        self.expiration_date = expiration_date
+
+    def get_info(self):
+        info = super().get_info()
+        info["срок_годности"] = self.expiration_date
+        return info
+
+    def update_expiration(self, new_date):
+        self.expiration_date = new_date
+
+    def is_expired(self, current_date):
+        return current_date > self.expiration_date
+
+    def delete(self):
+        super().delete()
+        self.expiration_date = None
